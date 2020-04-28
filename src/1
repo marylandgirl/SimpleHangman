@@ -1,0 +1,70 @@
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Arrays;
+
+public class SimpleHangman {
+   public static void main(String[] args) {
+      Scanner keyboard = new Scanner(System.in);
+      String guess = "";
+      int wordNum;
+      int wrongGuessCount = 0;
+      boolean done = false;
+      String chosenWord = "";
+      int chosenWordLength = 0;
+      char[] obscuredArray = null;
+      String lettersGuessed = null;
+      String obsWord = "";
+      int letterIndex;
+  
+      ArrayList<String> wordList = new <String> ArrayList();
+      wordList.add("tree");
+      wordList.add("rain");
+      wordList.add("bear");
+      wordList.add("encourage");
+      wordList.add("promise");
+      wordList.add("soup");
+      wordList.add("chess");
+      wordList.add("insurance");
+      wordList.add("pancakes");
+      wordList.add("stream");
+
+      System.out.println("Welcome, let's play hangman!");
+      Random rand = new Random();
+      wordNum = rand.nextInt(wordList.size());
+      chosenWord = wordList.get(wordNum);
+System.out.println("The password is..." + chosenWord);
+      obsWord = obscureWord(obscuredArray,lettersGuessed,chosenWord);
+      
+      System.out.print("Here is the word I'm thinking of: ");         
+      System.out.println(obsWord);         
+
+int testCounter = 0;
+      do {
+         System.out.print("Enter letter or word guess: ");
+         guess = keyboard.nextLine();
+         if (guess.equalsIgnorCase(chosenWord)) {
+            System.out.printf("You've won! The word was %s\n",chosenWord);
+            done = true;
+         } else if (chosenWord.contains(guess)) {
+            
+            obscureWord();
+         }
+if (testCounter >= 10)
+   done = true;
+      }while (!done);
+   }
+
+   static String obscureWord(char[] arrayObs,String guessed, String chosen ) {
+      if (arrayObs == null) {
+         arrayObs = new char[chosen.length()];
+         Arrays.fill(arrayObs,'_');
+      }
+      String retStr = Arrays.toString(arrayObs);
+      retStr = retStr.replaceAll("\\[","");
+      retStr = retStr.replaceAll("\\]","");
+      retStr = retStr.replaceAll(",","");
+      return retStr;
+   }
+}
